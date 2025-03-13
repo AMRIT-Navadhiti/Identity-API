@@ -8,22 +8,22 @@ RUN apt-get update && apt-get install -y maven
 WORKDIR /app
 
 # Copy the project files
-COPY pom.xml .
-COPY src ./src
-COPY checkstyle.xml .
+COPY ../pom.xml .
+COPY ../src ./src
+COPY ../checkstyle.xml .
 
 # Copy common_example.properties to the container
-COPY src/main/environment/common_example.properties /app/src/main/environment/common_example.properties
+COPY src/main/environment/1097_example.properties /app/src/main/environment/1097_example.properties
 
 # Copy entrypoint script and give execute permissions
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Build the project
-RUN mvn clean install -DENV_VAR=local
+RUN mvn clean install -P1097_identity -DENV_VAR=local
 
 # Expose the application port
-EXPOSE 8094
+EXPOSE 8095
 
 # Pass ENV_VAR to the application
 ARG ENV_VAR=local
